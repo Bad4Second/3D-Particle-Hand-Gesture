@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Particle Hand Gesture</title>
+    
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div id="loading">
+        <div class="spinner"></div>
+        <p id="loading-text" style="font-size: 0.85rem; color: #aaa; padding: 0 20px; text-align: center;">Downloading Mediapipe...</p>
+    </div>
+
+    <div class="control-panel">
+        <div class="camera-box">
+            <video id="webcam" autoplay playsinline muted></video>
+            <canvas id="hand-canvas"></canvas>
+        </div>
+        <div class="mini-popup">
+            <div class="title">Status Sistem</div>
+            <div id="mode-label" class="mode-text">Menginisialisasi...</div>
+        </div>
+    </div>
+
+    <div class="flowers-container-bridge">
+        <div id="css-bouquet" class="flowers">
+            <div class="butterfly-system">
+                <div class="butterfly-holder bf-1">
+                    <div class="butterfly">
+                        <div class="butterfly__wing wing-left"></div>
+                        <div class="butterfly__body"></div>
+                        <div class="butterfly__wing wing-right"></div>
+                    </div>
+                    <div class="trail-container">
+                        <div class="sparkle sp-1"></div><div class="sparkle sp-2"></div><div class="sparkle sp-3"></div><div class="sparkle sp-4"></div><div class="sparkle sp-5"></div>
+                    </div>
+                </div>
+                <div class="butterfly-holder bf-2">
+                    <div class="butterfly">
+                        <div class="butterfly__wing wing-left"></div>
+                        <div class="butterfly__body"></div>
+                        <div class="butterfly__wing wing-right"></div>
+                    </div>
+                    <div class="trail-container">
+                        <div class="sparkle sp-1"></div><div class="sparkle sp-2"></div><div class="sparkle sp-3"></div><div class="sparkle sp-4"></div><div class="sparkle sp-5"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="flower flower--1 theme-pink">
+                <div class="flower__leafs">
+                    <div class="flower__leaf flower__leaf--1"></div><div class="flower__leaf flower__leaf--2"></div><div class="flower__leaf flower__leaf--3"></div><div class="flower__leaf flower__leaf--4"></div>
+                    <div class="flower__white-circle"></div><div class="flower__light flower__light--1"></div>
+                </div>
+                <div class="flower__line"><div class="flower__line__leaf flower__line__leaf--1"></div><div class="flower__line__leaf flower__line__leaf--3"></div></div>
+            </div>
+            <div class="flower flower--2 theme-blue">
+                <div class="flower__leafs">
+                    <div class="flower__leaf flower__leaf--1"></div><div class="flower__leaf flower__leaf--2"></div><div class="flower__leaf flower__leaf--3"></div><div class="flower__leaf flower__leaf--4"></div>
+                    <div class="flower__white-circle"></div><div class="flower__light flower__light--2"></div>
+                </div>
+                <div class="flower__line"><div class="flower__line__leaf flower__line__leaf--1"></div><div class="flower__line__leaf flower__line__leaf--2"></div><div class="flower__line__leaf flower__line__leaf--3"></div><div class="flower__line__leaf flower__line__leaf--4"></div></div>
+            </div>
+            <div class="flower flower--3 theme-yellow">
+                <div class="flower__leafs">
+                    <div class="flower__leaf flower__leaf--1"></div><div class="flower__leaf flower__leaf--2"></div><div class="flower__leaf flower__leaf--3"></div><div class="flower__leaf flower__leaf--4"></div>
+                    <div class="flower__white-circle"></div><div class="flower__light flower__light--3"></div>
+                </div>
+                <div class="flower__line"><div class="flower__line__leaf flower__line__leaf--2"></div><div class="flower__line__leaf flower__line__leaf--4"></div></div>
+            </div>
+            <div class="flower flower--4 theme-pink">
+                <div class="flower__leafs">
+                    <div class="flower__leaf flower__leaf--1"></div><div class="flower__leaf flower__leaf--2"></div><div class="flower__leaf flower__leaf--3"></div><div class="flower__leaf flower__leaf--4"></div>
+                    <div class="flower__white-circle"></div>
+                </div>
+                <div class="flower__line"><div class="flower__line__leaf flower__line__leaf--1"></div><div class="flower__line__leaf flower__line__leaf--4"></div></div>
+            </div>
+            <div class="flower flower--5 theme-yellow">
+                <div class="flower__leafs">
+                    <div class="flower__leaf flower__leaf--1"></div><div class="flower__leaf flower__leaf--2"></div><div class="flower__leaf flower__leaf--3"></div><div class="flower__leaf flower__leaf--4"></div>
+                    <div class="flower__white-circle"></div>
+                </div>
+                <div class="flower__line"><div class="flower__line__leaf flower__line__leaf--2"></div><div class="flower__line__leaf flower__line__leaf--3"></div></div>
+            </div>
+            <div class="flower flower--6 theme-blue">
+                <div class="flower__leafs">
+                    <div class="flower__leaf flower__leaf--1"></div><div class="flower__leaf flower__leaf--2"></div><div class="flower__leaf flower__leaf--3"></div><div class="flower__leaf flower__leaf--4"></div>
+                    <div class="flower__white-circle"></div>
+                </div>
+                <div class="flower__line"><div class="flower__line__leaf flower__line__leaf--3"></div><div class="flower__line__leaf flower__line__leaf--4"></div></div>
+            </div>
+            <div class="flower flower--7 theme-pink">
+                <div class="flower__leafs">
+                    <div class="flower__leaf flower__leaf--1"></div><div class="flower__leaf flower__leaf--2"></div><div class="flower__leaf flower__leaf--3"></div><div class="flower__leaf flower__leaf--4"></div>
+                    <div class="flower__white-circle"></div>
+                </div>
+                <div class="flower__line"><div class="flower__line__leaf flower__line__leaf--1"></div><div class="flower__line__leaf flower__line__leaf--2"></div></div>
+            </div>
+            <div class="flower flower--8 theme-blue">
+                <div class="flower__leafs">
+                    <div class="flower__leaf flower__leaf--1"></div><div class="flower__leaf flower__leaf--2"></div><div class="flower__leaf flower__leaf--3"></div><div class="flower__leaf flower__leaf--4"></div>
+                    <div class="flower__white-circle"></div>
+                </div>
+                <div class="flower__line"><div class="flower__line__leaf flower__line__leaf--5"></div><div class="flower__line__leaf flower__line__leaf--3"></div></div>
+            </div>
+            <div class="flower flower--9 theme-pink">
+                <div class="flower__leafs">
+                    <div class="flower__leaf flower__leaf--1"></div><div class="flower__leaf flower__leaf--2"></div><div class="flower__leaf flower__leaf--3"></div><div class="flower__leaf flower__leaf--4"></div>
+                    <div class="flower__white-circle"></div>
+                </div>
+                <div class="flower__line"><div class="flower__line__leaf flower__line__leaf--6"></div><div class="flower__line__leaf flower__line__leaf--4"></div></div>
+            </div>
+
+            <div class="growing-grass">
+                <div class="flower__grass flower__grass--1">
+                    <div class="flower__grass--top"></div><div class="flower__grass--bottom"></div>
+                    <div class="flower__grass__leaf flower__grass__leaf--1"></div><div class="flower__grass__leaf flower__grass__leaf--2"></div><div class="flower__grass__leaf flower__grass__leaf--3"></div><div class="flower__grass__leaf flower__grass__leaf--4"></div>
+                    <div class="flower__grass__overlay"></div>
+                </div>
+            </div>
+            <div class="growing-grass">
+                <div class="flower__grass flower__grass--2">
+                    <div class="flower__grass--top"></div><div class="flower__grass--bottom"></div>
+                    <div class="flower__grass__overlay"></div>
+                </div>
+            </div>
+
+            <div class="nametag-ribbon">NAME YOUR LOVE HERE</div>
+        </div>
+    </div>
+
+    <div id="canvas-container"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
