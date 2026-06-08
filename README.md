@@ -30,7 +30,7 @@ Website ini membaca 5 mode bentuk tangan untuk memicu visual yang berbeda pada l
 | **2** | **Satu Jari 👆** | **Saturnus 3D:** Partikel membentuk bola inti dengan cincin asteroid oranye yang berputar di pergelangan tangan. (jupiter) |
 | **3** | **Dua Jari ✌** | **I LOVE YOU Text:** Partikel bertransformasi presisi membentuk teks tipografi neon biru. |
 | **4** | **Tangan Mengepal ✊** | **Hati / Love:** Partikel meluncur membentuk geometri simbol hati berwarna merah muda. |
-| **5** | **Tangan Terbuka 🖐** | **Buket Bunga Custom Name:** Partikel meluruh (transparan) dan memicu mekarnya buket bunga CSS penuh dari dasar layar. _(Ubah nama di file index.html line paling bawah)_ |
+| **5** | **Tangan Terbuka 🖐** | **Buket Bunga Custom Name:** Partikel meluruh (transparan) dan memicu mekarnya buket bunga. _(Ubah nama di file index.html line paling bawah)_ |
 
 ---
 
